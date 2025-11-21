@@ -348,7 +348,7 @@
             border-top: 1px solid #eee;
         }
 
-        /* MULTIMEDIA STYLES (NOVO) */
+        /* MULTIMEDIA STYLES */
         .media-container {
             background: #f8fafc;
             padding: 1.5rem;
@@ -475,10 +475,12 @@
 
     <nav>
         <div class="nav-container">
+            <!-- Multimédia Movido para o início -->
+            <button class="nav-btn" onclick="showSection('multimedia')">Multimédia</button>
             <button class="nav-btn active" onclick="showSection('guia')">Guia de Estudo</button>
             <button class="nav-btn" onclick="showSection('quiz')">Questionário</button>
             <button class="nav-btn" onclick="showSection('glossario')">Glossário & Exercícios</button>
-            <button class="nav-btn" onclick="showSection('multimedia')">Multimédia</button>
+            
             <!-- Botão Certificado só aparece se desbloqueado -->
             <button id="btn-certificado" class="nav-btn" onclick="showSection('certificado')">★ Obter Certificado ★</button>
         </div>
@@ -487,7 +489,12 @@
     <main>
         <!-- SECÇÃO 1: GUIA DE ESTUDO -->
         <section id="guia" class="section-content active">
-            <!-- Conteúdo do Guia mantido -->
+            
+            <!-- Nova frase introdutória -->
+            <p style="margin-bottom: 2rem; font-style: italic; color: var(--secondary); background: #e5e7eb; padding: 1rem; border-left: 4px solid var(--accent); border-radius: 4px;">
+                Depois de consultares o Vídeo Resumo ou o Podcast sobre a matéria faz a revisão com o seguinte Guia de Estudo ...
+            </p>
+
             <h2>1. Origens da Crise Sucessória e o Início da União (1578–1581)</h2>
             <ul>
                 <li><strong>A Tragédia Inicial:</strong> A crise começou em <strong>1578</strong> com a derrota na <strong>Batalha de Alcácer Quibir</strong>, onde desapareceu o jovem rei <strong>D. Sebastião</strong>.</li>
@@ -896,10 +903,11 @@
             document.getElementById(id).classList.add('active');
             const buttons = document.querySelectorAll('.nav-btn');
             
-            if(id === 'guia') buttons[0].classList.add('active');
-            if(id === 'quiz') buttons[1].classList.add('active');
-            if(id === 'glossario') buttons[2].classList.add('active');
-            if(id === 'multimedia') buttons[3].classList.add('active'); // Novo índice para Multimédia
+            // Actualizada a ordem dos botões: Multimédia -> Guia -> Quiz -> Glossário
+            if(id === 'multimedia') buttons[0].classList.add('active');
+            if(id === 'guia') buttons[1].classList.add('active');
+            if(id === 'quiz') buttons[2].classList.add('active');
+            if(id === 'glossario') buttons[3].classList.add('active');
             if(id === 'certificado') document.getElementById('btn-certificado').classList.add('active');
         }
 
