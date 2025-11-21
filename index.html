@@ -162,7 +162,7 @@
             color: var(--primary);
         }
 
-        /* TIMELINE STYLES (NOVO) */
+        /* TIMELINE STYLES */
         .timeline {
             position: relative;
             max-width: 800px;
@@ -170,7 +170,6 @@
             padding: 20px 0;
         }
 
-        /* The vertical line */
         .timeline::after {
             content: '';
             position: absolute;
@@ -178,25 +177,24 @@
             background-color: var(--accent);
             top: 0;
             bottom: 0;
-            left: 20px; /* Ajustado para mobile first/left alignment */
+            left: 20px;
             margin-left: -2px;
         }
 
         .timeline-item {
-            padding: 10px 30px 30px 50px; /* Left padding opens space for line */
+            padding: 10px 30px 30px 50px;
             position: relative;
             background-color: inherit;
             width: 100%;
         }
 
-        /* The circles on the timeline */
         .timeline-item::after {
             content: '';
             position: absolute;
             width: 20px;
             height: 20px;
             right: auto;
-            left: 11px; /* Align with line */
+            left: 11px;
             background-color: var(--white);
             border: 4px solid var(--primary);
             top: 25px;
@@ -212,7 +210,7 @@
 
         .timeline-content {
             padding: 20px;
-            background-color: #fffbf0; /* Tom ligeiramente amarelado */
+            background-color: #fffbf0;
             border-left: 4px solid var(--primary);
             border-radius: 4px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
@@ -237,6 +235,115 @@
             font-size: 1.2rem;
             color: var(--secondary);
             margin-bottom: 0.5rem;
+        }
+
+        /* FLASHCARDS STYLES (NOVO) */
+        .flashcard-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            perspective: 1000px;
+            margin: 2rem 0;
+        }
+
+        .flashcard-container {
+            width: 100%;
+            max-width: 600px;
+            height: 350px;
+            position: relative;
+            cursor: pointer;
+            transform-style: preserve-3d;
+            transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
+        }
+
+        .flashcard-container.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .flashcard-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            text-align: center;
+            font-size: 1.2rem;
+            border: 2px solid var(--primary);
+        }
+
+        .flashcard-front {
+            background-color: var(--white);
+            color: var(--secondary);
+        }
+
+        .flashcard-front::after {
+            content: '⚡ Toque para ver a resposta';
+            position: absolute;
+            bottom: 20px;
+            font-size: 0.8rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .flashcard-back {
+            background-color: var(--secondary);
+            color: var(--white);
+            transform: rotateY(180deg);
+            border-color: var(--secondary);
+        }
+
+        .fc-controls {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            justify-content: center;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .fc-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.2s;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .fc-btn:hover {
+            background-color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .fc-btn.secondary {
+            background-color: transparent;
+            border: 2px solid var(--secondary);
+            color: var(--secondary);
+        }
+        
+        .fc-btn.secondary:hover {
+            background-color: var(--secondary);
+            color: white;
+        }
+
+        .fc-progress {
+            margin-bottom: 1rem;
+            font-weight: bold;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         /* Analogia Box */
@@ -554,8 +661,8 @@
         <div class="nav-container">
             <button class="nav-btn" onclick="showSection('multimedia')">Multimédia</button>
             <button class="nav-btn active" onclick="showSection('guia')">Guia de Estudo</button>
-            <!-- Botão Cronologia Adicionado -->
             <button class="nav-btn" onclick="showSection('cronologia')">Cronologia</button>
+            <button class="nav-btn" onclick="showSection('flashcards')">Flashcards</button>
             <button class="nav-btn" onclick="showSection('quiz')">Questionário</button>
             <button class="nav-btn" onclick="showSection('glossario')">Glossário & Exercícios</button>
             
@@ -619,7 +726,7 @@
             </ul>
         </section>
 
-        <!-- NOVA SECÇÃO: CRONOLOGIA -->
+        <!-- SECÇÃO: CRONOLOGIA -->
         <section id="cronologia" class="section-content">
             <h2>Linha do Tempo Interativa (1578–1668)</h2>
             <p>Percorra os eventos chave que definiram este período da História de Portugal.</p>
@@ -698,6 +805,31 @@
                     </div>
                 </div>
 
+            </div>
+        </section>
+
+        <!-- NOVA SECÇÃO: FLASHCARDS -->
+        <section id="flashcards" class="section-content">
+            <h2>Flashcards (Cartões de Estudo)</h2>
+            <p>Teste a sua memória antes do questionário final. Toque no cartão para ver a resposta.</p>
+            
+            <div class="flashcard-wrapper">
+                <div class="fc-progress">Cartão <span id="fc-current">1</span> de <span id="fc-total">0</span></div>
+                
+                <div class="flashcard-container" id="flashcard" onclick="flipCard()">
+                    <div class="flashcard-face flashcard-front">
+                        <div id="fc-question">A carregar...</div>
+                    </div>
+                    <div class="flashcard-face flashcard-back">
+                        <div id="fc-answer">...</div>
+                    </div>
+                </div>
+
+                <div class="fc-controls">
+                    <button class="fc-btn secondary" onclick="prevCard(event)">❮ Anterior</button>
+                    <button class="fc-btn secondary" onclick="shuffleCards(event)">🔀 Baralhar</button>
+                    <button class="fc-btn" onclick="nextCard(event)">Seguinte ❯</button>
+                </div>
             </div>
         </section>
 
@@ -1009,6 +1141,33 @@
             totalPossibleGlossary: 20 // 5 exercícios x 4 pontos (simbólico, ou 4 itens cada)
         };
 
+        // --- DADOS FLASHCARDS (Do CSV) ---
+        const flashcardsData = [
+            { q: "Em que ano e em que batalha morreu o rei D. Sebastião de Portugal?", a: "Morreu em 1578, na Batalha de Alcácer Quibir." },
+            { q: "Qual foi a principal consequência da morte de D. Sebastião sem deixar descendentes?", a: "Precipitou uma crise de sucessão que abriu caminho à ascensão da dinastia espanhola." },
+            { q: "Quem sucedeu a D. Sebastião no trono português imediatamente após a sua morte?", a: "O seu tio, o Cardeal D. Henrique." },
+            { q: "Por que razão o reinado de D. Henrique não resolveu a crise de sucessão?", a: "Porque era um clérigo idoso e morreu em 1580 sem deixar herdeiros." },
+            { q: "Quais eram os três principais candidatos ao trono português após a morte de D. Henrique em 1580?", a: "D. Catarina de Bragança, D. António Prior do Crato e Filipe II de Espanha." },
+            { q: "Qual candidato ao trono português em 1580 era filho ilegítimo do Infante D. Luís e tinha o apoio popular?", a: "D. António, Prior do Crato." },
+            { q: "Que candidato ao trono português em 1580 tinha o apoio da nobreza, do alto clero e da burguesia?", a: "Filipe II de Espanha." },
+            { q: "Com o apoio de que grupo social Filipe II de Espanha conseguiu assumir o trono de Portugal em 1581?", a: "Assumiu o trono com o apoio da nobreza portuguesa." },
+            { q: "Como ficou conhecido o período de união entre Portugal e Espanha que durou 60 anos?", a: "Ficou conhecido como a União Ibérica." },
+            { q: "O mito do Sebastianismo alimentava a esperança de que o rei D. Sebastião _____ para libertar Portugal do domínio espanhol.", a: "ressuscitaria" },
+            { q: "Uma das desvantagens da União Ibérica para Portugal foi a crescente dependência _____ de Espanha.", a: "económica" },
+            { q: "Qual foi um dos fatores que contribuiu para a decadência do Império Português durante a União Ibérica?", a: "A entrada da Espanha em vários conflitos europeus, como a Guerra dos Trinta Anos." },
+            { q: "Durante a União Ibérica, os portugueses foram recrutados para lutar ao lado dos espanhóis em conflitos como a _____.", a: "Guerra dos Trinta Anos" },
+            { q: "Qual era o nome do nobre português mais poderoso que foi aclamado rei em 1640?", a: "O Duque de Bragança." },
+            { q: "A ascensão da Dinastia de Bragança em 1640 marcou o fim da _____ e a ascensão ao trono de D. João IV.", a: "União Ibérica" },
+            { q: "Que tratado pôs fim à Guerra da Restauração e oficializou o reconhecimento da independência de Portugal por parte de Espanha?", a: "O Tratado de Lisboa de 1668." },
+            { q: "A União Ibérica, apesar da perda de autonomia, levou a uma maior _____ do país no seu império colonial.", a: "integração" },
+            { q: "Qual era a relação de parentesco de D. Catarina, Duquesa de Bragança, com a linha real portuguesa?", a: "Era neta de D. Manuel I e prima de D. Sebastião." },
+            { q: "Porque é que a candidatura de D. Catarina de Bragança ao trono era considerada frágil?", a: "Pela sua falta de apoio popular e da elite, e por ser mulher num mundo dominado por homens." }
+        ];
+
+        let currentCardIndex = 0;
+        let isFlipped = false;
+        let currentFlashcards = [...flashcardsData]; // Cópia para baralhar
+
         // --- DADOS DO GLOSSÁRIO ---
         const glossaryData = [
             { term: "União Ibérica", def: "Período (1580-1640) em que Portugal e Espanha estiveram unidos sob a mesma coroa." },
@@ -1062,12 +1221,13 @@
             document.getElementById(id).classList.add('active');
             const buttons = document.querySelectorAll('.nav-btn');
             
-            // Actualizada a ordem dos botões: Multimédia -> Guia -> Cronologia -> Quiz -> Glossário
+            // Ordem: Multimédia -> Guia -> Cronologia -> Flashcards -> Quiz -> Glossário
             if(id === 'multimedia') buttons[0].classList.add('active');
             if(id === 'guia') buttons[1].classList.add('active');
-            if(id === 'cronologia') buttons[2].classList.add('active'); // Novo botão
-            if(id === 'quiz') buttons[3].classList.add('active');
-            if(id === 'glossario') buttons[4].classList.add('active');
+            if(id === 'cronologia') buttons[2].classList.add('active');
+            if(id === 'flashcards') buttons[3].classList.add('active');
+            if(id === 'quiz') buttons[4].classList.add('active');
+            if(id === 'glossario') buttons[5].classList.add('active');
             if(id === 'certificado') document.getElementById('btn-certificado').classList.add('active');
         }
 
@@ -1079,8 +1239,63 @@
             }
         }
 
+        // --- FLASHCARDS LOGIC ---
+        function renderCard() {
+            const card = currentFlashcards[currentCardIndex];
+            document.getElementById('fc-question').innerText = card.q;
+            document.getElementById('fc-answer').innerText = card.a;
+            document.getElementById('fc-current').innerText = currentCardIndex + 1;
+            document.getElementById('fc-total').innerText = currentFlashcards.length;
+            
+            // Reset flip state
+            const container = document.getElementById('flashcard');
+            container.classList.remove('flipped');
+            isFlipped = false;
+        }
+
+        function flipCard() {
+            const container = document.getElementById('flashcard');
+            container.classList.toggle('flipped');
+            isFlipped = !isFlipped;
+        }
+
+        function nextCard(e) {
+            e.stopPropagation(); // Prevent flip when clicking button
+            if (currentCardIndex < currentFlashcards.length - 1) {
+                currentCardIndex++;
+            } else {
+                currentCardIndex = 0; // Loop back to start
+            }
+            renderCard();
+        }
+
+        function prevCard(e) {
+            e.stopPropagation();
+            if (currentCardIndex > 0) {
+                currentCardIndex--;
+            } else {
+                currentCardIndex = currentFlashcards.length - 1; // Loop to end
+            }
+            renderCard();
+        }
+
+        function shuffleCards(e) {
+            e.stopPropagation();
+            // Fisher-Yates Shuffle
+            for (let i = currentFlashcards.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [currentFlashcards[i], currentFlashcards[j]] = [currentFlashcards[j], currentFlashcards[i]];
+            }
+            currentCardIndex = 0;
+            renderCard();
+        }
+
+
         // --- INICIALIZAÇÃO ---
         window.onload = function() {
+            // Init Flashcards
+            renderCard();
+
             // Render Glossário
             const glossaryContainer = document.getElementById('glossary-container');
             glossaryContainer.innerHTML = glossaryData.map(item => `
