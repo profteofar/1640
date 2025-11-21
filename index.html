@@ -162,6 +162,83 @@
             color: var(--primary);
         }
 
+        /* TIMELINE STYLES (NOVO) */
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px 0;
+        }
+
+        /* The vertical line */
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background-color: var(--accent);
+            top: 0;
+            bottom: 0;
+            left: 20px; /* Ajustado para mobile first/left alignment */
+            margin-left: -2px;
+        }
+
+        .timeline-item {
+            padding: 10px 30px 30px 50px; /* Left padding opens space for line */
+            position: relative;
+            background-color: inherit;
+            width: 100%;
+        }
+
+        /* The circles on the timeline */
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            right: auto;
+            left: 11px; /* Align with line */
+            background-color: var(--white);
+            border: 4px solid var(--primary);
+            top: 25px;
+            border-radius: 50%;
+            z-index: 1;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-item:hover::after {
+            background-color: var(--accent);
+            transform: scale(1.2);
+        }
+
+        .timeline-content {
+            padding: 20px;
+            background-color: #fffbf0; /* Tom ligeiramente amarelado */
+            border-left: 4px solid var(--primary);
+            border-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .timeline-item:hover .timeline-content {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+        }
+
+        .timeline-date {
+            color: var(--accent);
+            font-weight: 800;
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        
+        .timeline-title {
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+        }
+
         /* Analogia Box */
         .analogy-box {
             background-color: #FFFBEB;
@@ -475,9 +552,10 @@
 
     <nav>
         <div class="nav-container">
-            <!-- Multimédia Movido para o início -->
             <button class="nav-btn" onclick="showSection('multimedia')">Multimédia</button>
             <button class="nav-btn active" onclick="showSection('guia')">Guia de Estudo</button>
+            <!-- Botão Cronologia Adicionado -->
+            <button class="nav-btn" onclick="showSection('cronologia')">Cronologia</button>
             <button class="nav-btn" onclick="showSection('quiz')">Questionário</button>
             <button class="nav-btn" onclick="showSection('glossario')">Glossário & Exercícios</button>
             
@@ -490,7 +568,6 @@
         <!-- SECÇÃO 1: GUIA DE ESTUDO -->
         <section id="guia" class="section-content active">
             
-            <!-- Nova frase introdutória -->
             <p style="margin-bottom: 2rem; font-style: italic; color: var(--secondary); background: #e5e7eb; padding: 1rem; border-left: 4px solid var(--accent); border-radius: 4px;">
                 Depois de consultares o Vídeo Resumo ou o Podcast sobre a matéria faz a revisão com o seguinte Guia de Estudo ...
             </p>
@@ -540,6 +617,88 @@
                 <li><strong>O Rei Restaurado:</strong> O Duque de Bragança foi aclamado como <strong>D. João IV</strong>.</li>
                 <li><strong>A Guerra:</strong> Seguiu-se a Guerra da Restauração, que durou 28 anos, até ao reconhecimento oficial por Espanha em <strong>1668</strong>.</li>
             </ul>
+        </section>
+
+        <!-- NOVA SECÇÃO: CRONOLOGIA -->
+        <section id="cronologia" class="section-content">
+            <h2>Linha do Tempo Interativa (1578–1668)</h2>
+            <p>Percorra os eventos chave que definiram este período da História de Portugal.</p>
+            
+            <div class="timeline">
+                
+                <!-- 1578 -->
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <span class="timeline-date">1578</span>
+                        <div class="timeline-title">A Tragédia de Alcácer Quibir</div>
+                        <p>O jovem rei <strong>D. Sebastião</strong> desaparece em combate. Como não tinha filhos, a coroa passa para o seu tio-avô idoso, o Cardeal D. Henrique, iniciando a crise dinástica.</p>
+                    </div>
+                </div>
+
+                <!-- 1580 -->
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <span class="timeline-date">1580</span>
+                        <div class="timeline-title">O Trono Vago</div>
+                        <p>Morte do Cardeal D. Henrique. Gera-se um vácuo de poder. Os principais candidatos são D. Catarina de Bragança e <strong>Filipe II de Espanha</strong>. Filipe II ganha apoio da Nobreza, Clero e Burguesia.</p>
+                    </div>
+                </div>
+
+                <!-- 1581 União -->
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <span class="timeline-date">1581</span>
+                        <div class="timeline-title">O Nascimento da União Ibérica</div>
+                        <p>Filipe II é aclamado rei, tornando-se <strong>Filipe I de Portugal</strong>. Nasce a União Ibérica, juntando dois impérios globais sob um único monarca.</p>
+                    </div>
+                </div>
+
+                <!-- 1581 Tomar -->
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <span class="timeline-date">1581</span>
+                        <div class="timeline-title">Os Juramentos de Tomar</div>
+                        <p>Nas Cortes de Tomar, Filipe I promete respeitar a autonomia: manter a língua, a moeda e garantir cargos apenas para portugueses. A união é aceite como uma parceria de reinos iguais.</p>
+                    </div>
+                </div>
+
+                <!-- Pós-1581 -->
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <span class="timeline-date">Pós-1581</span>
+                        <div class="timeline-title">Consequências e Ataques</div>
+                        <p>Portugal ganha inimigos (Inglaterra, Holanda). Colónias no Oriente e Brasil são atacadas. Crise económica em Espanha leva à violação das promessas: aumento de impostos e espanhóis em cargos portugueses.</p>
+                    </div>
+                </div>
+
+                <!-- 1630s -->
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <span class="timeline-date">Anos 1630</span>
+                        <div class="timeline-title">A Véspera da Revolta</div>
+                        <p>O descontentamento popular explode. Em 1637, ocorre a <strong>Revolta do Manuelinho</strong> em Évora, protestando contra o aumento brutal de impostos.</p>
+                    </div>
+                </div>
+
+                <!-- 1640 -->
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <span class="timeline-date">1640</span>
+                        <div class="timeline-title">A Restauração da Independência</div>
+                        <p>Olivares tenta forçar nobres portugueses a lutar na Catalunha. A <strong>1 de Dezembro</strong>, os 40 Conjurados tomam o palácio e aclamam o Duque de Bragança como <strong>D. João IV</strong>.</p>
+                    </div>
+                </div>
+
+                <!-- 1640-1668 -->
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <span class="timeline-date">1640–1668</span>
+                        <div class="timeline-title">Guerra da Restauração</div>
+                        <p>Início de um conflito de 28 anos pela soberania. A independência só é oficialmente reconhecida por Espanha em 1668, após longas batalhas diplomáticas e militares.</p>
+                    </div>
+                </div>
+
+            </div>
         </section>
 
         <!-- SECÇÃO 2: QUESTIONÁRIO -->
@@ -903,11 +1062,12 @@
             document.getElementById(id).classList.add('active');
             const buttons = document.querySelectorAll('.nav-btn');
             
-            // Actualizada a ordem dos botões: Multimédia -> Guia -> Quiz -> Glossário
+            // Actualizada a ordem dos botões: Multimédia -> Guia -> Cronologia -> Quiz -> Glossário
             if(id === 'multimedia') buttons[0].classList.add('active');
             if(id === 'guia') buttons[1].classList.add('active');
-            if(id === 'quiz') buttons[2].classList.add('active');
-            if(id === 'glossario') buttons[3].classList.add('active');
+            if(id === 'cronologia') buttons[2].classList.add('active'); // Novo botão
+            if(id === 'quiz') buttons[3].classList.add('active');
+            if(id === 'glossario') buttons[4].classList.add('active');
             if(id === 'certificado') document.getElementById('btn-certificado').classList.add('active');
         }
 
