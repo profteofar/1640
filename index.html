@@ -162,6 +162,71 @@
             color: var(--primary);
         }
 
+        /* ACCORDION STYLES */
+        .study-guide-accordion {
+            margin-top: 2rem;
+        }
+
+        .accordion-item {
+            background: var(--white);
+            border: 1px solid #e5e7eb;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .accordion-header {
+            background: var(--white);
+            color: var(--primary);
+            padding: 1.5rem;
+            width: 100%;
+            text-align: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s, color 0.3s;
+            border-left: 6px solid var(--accent);
+        }
+
+        .accordion-header:hover {
+            background-color: #fff9e6;
+        }
+
+        .accordion-header.active {
+            background-color: var(--primary);
+            color: var(--white);
+            border-left-color: var(--secondary);
+        }
+
+        .accordion-header::after {
+            content: '+';
+            font-size: 2rem;
+            line-height: 1rem;
+            font-weight: normal;
+        }
+
+        .accordion-header.active::after {
+            content: '−';
+        }
+
+        .accordion-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out;
+            background-color: #fafafa;
+        }
+
+        .accordion-content-inner {
+            padding: 1.5rem;
+            border-top: 1px solid #eee;
+        }
+
         /* TIMELINE STYLES */
         .timeline {
             position: relative;
@@ -237,7 +302,7 @@
             margin-bottom: 0.5rem;
         }
 
-        /* FLASHCARDS STYLES (NOVO) */
+        /* FLASHCARDS STYLES */
         .flashcard-wrapper {
             display: flex;
             flex-direction: column;
@@ -344,6 +409,26 @@
             color: var(--accent);
             text-transform: uppercase;
             letter-spacing: 1px;
+        }
+
+        /* MULTIMEDIA STYLES */
+        .media-container {
+            background: #f8fafc;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            border: 1px solid #e2e8f0;
+        }
+
+        .media-label {
+            display: block;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         /* Analogia Box */
@@ -532,26 +617,6 @@
             border-top: 1px solid #eee;
         }
 
-        /* MULTIMEDIA STYLES */
-        .media-container {
-            background: #f8fafc;
-            padding: 1.5rem;
-            border-radius: 8px;
-            margin-bottom: 2rem;
-            border: 1px solid #e2e8f0;
-        }
-
-        .media-label {
-            display: block;
-            font-weight: bold;
-            color: var(--primary);
-            margin-bottom: 0.5rem;
-            font-size: 1.1rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
         /* CERTIFICATE STYLES */
         .certificate-wrapper {
             border: 10px double var(--primary);
@@ -672,61 +737,141 @@
     </nav>
 
     <main>
-        <!-- SECÇÃO 1: GUIA DE ESTUDO -->
+        <!-- SECÇÃO 1: MULTIMÉDIA (SEM IFRAME) -->
+        <section id="multimedia" class="section-content">
+            <h2>Recursos Multimédia</h2>
+            <p>Aprofunde os seus conhecimentos através destes recursos audiovisuais.</p>
+
+            <div class="media-container">
+                <span class="media-label">🎬 Vídeo: A Revolta de 1640</span>
+                <video width="100%" height="auto" controls style="border-radius: 8px; margin-top: 0.5rem; background: #000;">
+                    <source src="./1640.mp4" type="video/mp4">
+                    O seu navegador não suporta a reprodução de vídeo.
+                </video>
+                <p style="margin-top: 0.5rem; font-size: 0.9rem; opacity: 0.8;">Um olhar visual sobre os acontecimentos do 1º de Dezembro.</p>
+            </div>
+
+            <div class="media-container">
+                <span class="media-label">🎧 Podcast: O Caminho para a Independência</span>
+                <audio controls style="width: 100%; margin-top: 0.5rem;">
+                    <source src="./1640.mp3" type="audio/mpeg">
+                    O seu navegador não suporta o elemento de áudio.
+                </audio>
+                <p style="margin-top: 0.5rem; font-size: 0.9rem; opacity: 0.8;">Ouça a análise detalhada sobre o contexto político da época.</p>
+            </div>
+        </section>
+
+        <!-- SECÇÃO 2: GUIA DE ESTUDO (ACORDEÃO) -->
         <section id="guia" class="section-content active">
             
             <p style="margin-bottom: 2rem; font-style: italic; color: var(--secondary); background: #e5e7eb; padding: 1rem; border-left: 4px solid var(--accent); border-radius: 4px;">
-                Depois de consultares o Vídeo Resumo ou o Podcast sobre a matéria faz a revisão com o seguinte Guia de Estudo ...
+                Depois de consultares o Vídeo Resumo ou o Podcast sobre a matéria faz a revisão com o seguinte Guia de Estudo. <br><strong>Clica nos tópicos abaixo para expandir o conteúdo.</strong>
             </p>
 
-            <h2>1. Origens da Crise Sucessória e o Início da União (1578–1581)</h2>
-            <ul>
-                <li><strong>A Tragédia Inicial:</strong> A crise começou em <strong>1578</strong> com a derrota na <strong>Batalha de Alcácer Quibir</strong>, onde desapareceu o jovem rei <strong>D. Sebastião</strong>.</li>
-                <li><strong>Candidatos ao Trono:</strong> Após a morte do Cardeal D. Henrique (1580), os principais candidatos eram <strong>D. Catarina de Bragança</strong>, <strong>Filipe II de Espanha</strong> e <strong>D. António, Prior do Crato</strong>.</li>
-                <li><strong>Apoio a Filipe II:</strong> Foi apoiado pela <strong>Nobreza, Alto Clero e Burguesia</strong>. Estes grupos esperavam estabilidade, novos negócios e acesso à prata/ouro da América espanhola.</li>
-                <li><strong>Novo Rei:</strong> Filipe II de Espanha foi aclamado como <strong>Filipe I de Portugal</strong>.</li>
-            </ul>
+            <div class="study-guide-accordion">
+                
+                <!-- TÓPICO 1 -->
+                <div class="accordion-item">
+                    <button class="accordion-header">1. Origens da Crise Sucessória (1578–1580)</button>
+                    <div class="accordion-body">
+                        <div class="accordion-content-inner">
+                            <ul>
+                                <li><strong>A Tragédia de Alcácer-Quibir (1578):</strong> O jovem rei <strong>D. Sebastião</strong> partiu para Marrocos sem herdeiros diretos, resultando num massacre do exército português e no seu desaparecimento em combate.</li>
+                                <li><strong>Vácuo de Poder:</strong> A morte do rei deixou Portugal sem líder e num estado de profunda instabilidade. A coroa passou para o seu tio-avô, o <strong>Cardeal D. Henrique</strong>.</li>
+                                <li><strong>A Busca por um Herdeiro:</strong> O Cardeal D. Henrique, velho e doente, faleceu em 1580 sem deixar descendentes. A lei determinava que a coroa passasse para a linhagem mais próxima, abrindo as portas a uma disputa internacional pelo trono.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
 
-            <h2>2. A Fundação da União (Cortes de Tomar, 1581)</h2>
-            <p>Nas Cortes de Tomar, Filipe I fez promessas fundamentais para garantir a aceitação dos portugueses, estabelecendo uma união de duas coroas independentes:</p>
-            <ul>
-                <li>A língua portuguesa continuaria a ser a oficial.</li>
-                <li>A moeda portuguesa permaneceria a mesma.</li>
-                <li>Os cargos administrativos seriam ocupados <strong>apenas por portugueses</strong>.</li>
-                <li>Os territórios do Império Português continuariam sob governação portuguesa.</li>
-            </ul>
+                <!-- TÓPICO 2 -->
+                <div class="accordion-item">
+                    <button class="accordion-header">2. Os Candidatos ao Trono: Legitimidade vs. Poder</button>
+                    <div class="accordion-body">
+                        <div class="accordion-content-inner">
+                            <p>Após a morte do Cardeal D. Henrique, destacaram-se três netos de D. Manuel I na corrida ao trono:</p>
+                            <ul>
+                                <li><strong>D. Catarina, Duquesa de Bragança:</strong> A candidata com maior legitimidade jurídica (nascida em Portugal), mas prejudicada por ser mulher num mundo político masculino e por hesitação no apoio popular.</li>
+                                <li><strong>D. António, Prior do Crato:</strong> Filho ilegítimo do Infante D. Luís. Tinha um enorme apoio popular ("o rei do povo") e do baixo clero, mas a sua ilegitimidade de nascimento enfraquecia a sua pretensão legal.</li>
+                                <li><strong>Filipe II de Espanha:</strong> Também neto de D. Manuel I (pela mãe, Isabel de Portugal). Era o monarca mais poderoso do mundo na altura. Contava com o apoio da <strong>Nobreza, Alto Clero e Burguesia</strong>, que viam na união uma oportunidade de negócios e acesso à prata da América.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
 
-            <h2>3. Causas da Destruição e Colapso Interno</h2>
-            <ul>
-                <li><strong>Violação das Promessas:</strong> O descontentamento cresceu porque os sucessores de Filipe I (Filipe III e IV de Espanha) começaram a desrespeitar o juramento de Tomar.</li>
-                <li><strong>Crise Económica:</strong> Com a diminuição da prata da América, Espanha aumentou os <strong>impostos</strong> sobre Portugal e começou a nomear espanhóis para cargos portugueses.</li>
-                <li><strong>Revolta Popular:</strong> O descontentamento alastrou da elite para o povo. Exemplo: <strong>Revolta do Manuelinho</strong> em Évora (1637), contra o aumento de impostos.</li>
-            </ul>
+                <!-- TÓPICO 3 -->
+                <div class="accordion-item">
+                    <button class="accordion-header">3. A Invasão e a Fundação da União (1580-1581)</button>
+                    <div class="accordion-body">
+                        <div class="accordion-content-inner">
+                            <ul>
+                                <li><strong>A Invasão Militar:</strong> Perante a resistência de D. António (que se aclamou rei em Santarém), Filipe II ordenou a invasão de Portugal. O exército espanhol, liderado pelo temível <strong>Duque de Alba</strong>, entrou no país.</li>
+                                <li><strong>Batalha de Alcântara (1580):</strong> As forças populares e desorganizadas de D. António foram derrotadas pelo exército profissional espanhol às portas de Lisboa.</li>
+                                <li><strong>Cortes de Tomar (1581):</strong> Vitorioso, Filipe II foi aclamado <strong>Filipe I de Portugal</strong>. Para garantir a paz, fez o "pacto de união":
+                                    <ul>
+                                        <li>Manutenção da língua, moeda e leis portuguesas.</li>
+                                        <li>Cargos administrativos apenas para portugueses.</li>
+                                        <li>Autonomia na gestão do império colonial português.</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
 
-            <h2>4. Fatores de Colapso Externo (Guerra Económica)</h2>
-            <ul>
-                <li><strong>Novos Inimigos:</strong> Ao unir-se a Espanha, Portugal herdou os inimigos desta: <strong>Holanda, Inglaterra e França</strong>.</li>
-                <li><strong>O Alvo:</strong> As colónias e rotas comerciais portuguesas (Brasil, África, Oriente) tornaram-se alvos legítimos de ataque.</li>
-                <li><strong>Arma Secreta:</strong> Holandeses e Ingleses usavam <strong>Companhias de Comércio</strong> (empresas privadas com acionistas), que eram mais ágeis que o monopólio estatal ibérico.</li>
-                <li><strong>Desafio Ideológico:</strong> O jurista <strong>Hugo Grótios</strong> defendeu o <em>Mare Liberum</em> (Mar Livre), atacando a exclusividade do Tratado de Tordesilhas (<em>Mare Clausum</em>).</li>
-            </ul>
+                <!-- TÓPICO 4 -->
+                <div class="accordion-item">
+                    <button class="accordion-header">4. A União Ibérica e o Colapso (1581-1640)</button>
+                    <div class="accordion-body">
+                        <div class="accordion-content-inner">
+                            <p>Inicialmente aceite como uma "Monarquia Dual" (dois reinos independentes sob o mesmo rei), a situação degradou-se com os sucessores Filipe II e III (III e IV de Espanha):</p>
+                            <ul>
+                                <li><strong>Inimigos Comuns:</strong> Portugal herdou os inimigos de Espanha (Inglaterra, Holanda). As colónias no Brasil e no Oriente foram atacadas por Companhias de Comércio rivais.</li>
+                                <li><strong>Violação das Promessas:</strong> A Espanha, em crise económica, começou a lançar impostos pesados sobre Portugal e a nomear espanhóis para cargos nacionais, violando o juramento de Tomar.</li>
+                                <li><strong>Revoltas Populares:</strong> A instabilidade cresceu com a <strong>Revolta das Maçarocas (1628)</strong> no Porto e a famosa <strong>Revolta do Manuelinho (1637)</strong> em Évora, demonstrando a fragilidade do domínio espanhol.</li>
+                            </ul>
+                            <div class="analogy-box">
+                                <h3>Analogia: O Choque de Modelos</h3>
+                                <p>O <strong>Modelo Ibérico</strong> era estatal e lento ("navio-mãe"). O <strong>Modelo do Norte</strong> (Holanda/Inglês) era ágil e privado ("lanchas rápidas"), permitindo-lhes roubar o comércio global.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-            <div class="analogy-box">
-                <h3>Analogia: O Choque de Modelos Económicos</h3>
-                <p>O <strong>Modelo Ibérico</strong> era como um "navio-mãe" gigante e lento: estatal, focado apenas em ouro/prata e difícil de manobrar. Se o Estado falhava, tudo parava.</p>
-                <p>O <strong>Modelo do Norte (Holandês/Inglês)</strong> era como um enxame de "lanchas rápidas": companhias privadas ágeis, financiadas por muitos investidores. Se uma falhasse, as outras continuavam a atacar e a lucrar.</p>
+                <!-- TÓPICO 5 -->
+                <div class="accordion-item">
+                    <button class="accordion-header">5. A Restauração da Independência (1640)</button>
+                    <div class="accordion-body">
+                        <div class="accordion-content-inner">
+                            <ul>
+                                <li><strong>O Estopim:</strong> A tentativa do Conde-Duque de Olivares de obrigar nobres portugueses a lutar na Catalunha foi a gota de água.</li>
+                                <li><strong>1 de Dezembro de 1640:</strong> Os "40 Conjurados" assaltaram o Paço Real. <strong>Miguel de Vasconcelos</strong> (o secretário traidor) foi morto e a <strong>Duquesa de Mântua</strong> presa.</li>
+                                <li><strong>D. João IV:</strong> O Duque de Bragança foi aclamado rei, restaurando a independência e iniciando a Dinastia de Bragança.</li>
+                                <li><strong>Guerra da Restauração (1641-1668):</strong> Seguiram-se 28 anos de conflito militar para segurar a independência. Batalhas cruciais incluíram a <strong>Batalha de Montijo</strong> (1644) e o <strong>Cerco de Elvas</strong> (1644). A paz só foi oficializada em fevereiro de 1668 com o <strong>Tratado de Lisboa</strong>.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TÓPICO 6 -->
+                <div class="accordion-item">
+                    <button class="accordion-header">6. O Legado: Sebastianismo e Identidade</button>
+                    <div class="accordion-body">
+                        <div class="accordion-content-inner">
+                            <p>A crise de 1580 deixou uma marca profunda na cultura portuguesa:</p>
+                            <ul>
+                                <li><strong>O Mito do Sebastianismo:</strong> A recusa em aceitar a morte do rei levou à crença de que D. Sebastião voltaria num dia de nevoeiro para salvar Portugal.</li>
+                                <li><strong>Esperança e Resistência:</strong> Este mito serviu como uma "arma psicológica" de resistência contra o domínio espanhol, alimentando a esperança na restauração da independência.</li>
+                                <li><strong>Identidade Nacional:</strong> A luta contra o domínio castelhano e a posterior Guerra da Restauração solidificaram o sentimento de identidade nacional portuguesa e a determinação em manter a soberania face a uma Europa em mudança.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
             </div>
-
-            <h2>5. A Restauração de 1640</h2>
-            <ul>
-                <li><strong>A Faísca Final:</strong> A tentativa do <strong>Conde Duque de Olivares</strong> de recrutar nobres portugueses para combater na revolta da Catalunha.</li>
-                <li><strong>O Golpe:</strong> A <strong>1 de dezembro de 1640</strong>, os "40 Conjurados" atacaram o Paço Real em Lisboa.</li>
-                <li><strong>O Rei Restaurado:</strong> O Duque de Bragança foi aclamado como <strong>D. João IV</strong>.</li>
-                <li><strong>A Guerra:</strong> Seguiu-se a Guerra da Restauração, que durou 28 anos, até ao reconhecimento oficial por Espanha em <strong>1668</strong>.</li>
-            </ul>
         </section>
 
-        <!-- SECÇÃO: CRONOLOGIA -->
+        <!-- SECÇÃO 3: CRONOLOGIA -->
         <section id="cronologia" class="section-content">
             <h2>Linha do Tempo Interativa (1578–1668)</h2>
             <p>Percorra os eventos chave que definiram este período da História de Portugal.</p>
@@ -746,8 +891,8 @@
                 <div class="timeline-item">
                     <div class="timeline-content">
                         <span class="timeline-date">1580</span>
-                        <div class="timeline-title">O Trono Vago</div>
-                        <p>Morte do Cardeal D. Henrique. Gera-se um vácuo de poder. Os principais candidatos são D. Catarina de Bragança e <strong>Filipe II de Espanha</strong>. Filipe II ganha apoio da Nobreza, Clero e Burguesia.</p>
+                        <div class="timeline-title">O Trono Vago e Invasão</div>
+                        <p>Morte do Cardeal D. Henrique. Filipe II invade Portugal (Duque de Alba). D. António resiste mas é derrotado na <strong>Batalha de Alcântara</strong>.</p>
                     </div>
                 </div>
 
@@ -808,7 +953,7 @@
             </div>
         </section>
 
-        <!-- NOVA SECÇÃO: FLASHCARDS -->
+        <!-- SECÇÃO 4: FLASHCARDS -->
         <section id="flashcards" class="section-content">
             <h2>Flashcards (Cartões de Estudo)</h2>
             <p>Teste a sua memória antes do questionário final. Toque no cartão para ver a resposta.</p>
@@ -833,7 +978,7 @@
             </div>
         </section>
 
-        <!-- SECÇÃO 2: QUESTIONÁRIO -->
+        <!-- SECÇÃO 5: QUESTIONÁRIO -->
         <section id="quiz" class="section-content">
             <h2>Questionário de Avaliação</h2>
             <p style="margin-bottom: 2rem;">Responda às 15 questões para testar o seu conhecimento. (Valerá para o certificado final)</p>
@@ -1000,7 +1145,7 @@
             </form>
         </section>
 
-        <!-- SECÇÃO 3: GLOSSÁRIO INTERATIVO E EXERCÍCIOS -->
+        <!-- SECÇÃO 6: GLOSSÁRIO INTERATIVO E EXERCÍCIOS -->
         <section id="glossario" class="section-content">
             <h2>Glossário Interativo</h2>
             <p>Clique nos termos para expandir as definições.</p>
@@ -1064,32 +1209,7 @@
 
         </section>
 
-        <!-- SECÇÃO 4: MULTIMÉDIA (NOVO) -->
-        <section id="multimedia" class="section-content">
-            <h2>Recursos Multimédia</h2>
-            <p>Aprofunde os seus conhecimentos através destes recursos audiovisuais.</p>
-
-            <div class="media-container">
-                <span class="media-label">🎬 Vídeo: A Revolta de 1640</span>
-                <video width="100%" height="auto" controls style="border-radius: 8px; margin-top: 0.5rem; background: #000;">
-                    <source src="./1640.mp4" type="video/mp4">
-                    O seu navegador não suporta a reprodução de vídeo.
-                </video>
-                <p style="margin-top: 0.5rem; font-size: 0.9rem; opacity: 0.8;">Um olhar visual sobre os acontecimentos do 1º de Dezembro.</p>
-            </div>
-
-            <div class="media-container">
-                <span class="media-label">🎧 Podcast: O Caminho para a Independência</span>
-                <audio controls style="width: 100%; margin-top: 0.5rem;">
-                    <source src="./1640.mp3" type="audio/mpeg">
-                    O seu navegador não suporta o elemento de áudio.
-                </audio>
-                <p style="margin-top: 0.5rem; font-size: 0.9rem; opacity: 0.8;">Ouça a análise detalhada sobre o contexto político da época.</p>
-            </div>
-        </section>
-
-
-        <!-- SECÇÃO 5: CERTIFICADO (Inicialmente Vazio/Oculto) -->
+        <!-- SECÇÃO 7: CERTIFICADO (Inicialmente Vazio/Oculto) -->
         <section id="certificado" class="section-content">
             <h2>Certificado de Conclusão</h2>
             <p>Parabéns por concluir todas as atividades! Preencha o seu nome para gerar o certificado oficial.</p>
@@ -1235,7 +1355,22 @@
             if (appState.quizCompleted && appState.glossaryCompleted) {
                 const btn = document.getElementById('btn-certificado');
                 btn.classList.add('visible');
-                // Opcional: alert("Parabéns! Desbloqueou o Certificado Final. Verifique o menu.");
+            }
+        }
+
+        // --- ACCORDION LOGIC ---
+        function initAccordion() {
+            const acc = document.getElementsByClassName("accordion-header");
+            for (let i = 0; i < acc.length; i++) {
+                acc[i].addEventListener("click", function() {
+                    this.classList.toggle("active");
+                    const panel = this.nextElementSibling;
+                    if (panel.style.maxHeight) {
+                        panel.style.maxHeight = null;
+                    } else {
+                        panel.style.maxHeight = panel.scrollHeight + "px";
+                    } 
+                });
             }
         }
 
@@ -1247,7 +1382,6 @@
             document.getElementById('fc-current').innerText = currentCardIndex + 1;
             document.getElementById('fc-total').innerText = currentFlashcards.length;
             
-            // Reset flip state
             const container = document.getElementById('flashcard');
             container.classList.remove('flipped');
             isFlipped = false;
@@ -1260,11 +1394,11 @@
         }
 
         function nextCard(e) {
-            e.stopPropagation(); // Prevent flip when clicking button
+            e.stopPropagation();
             if (currentCardIndex < currentFlashcards.length - 1) {
                 currentCardIndex++;
             } else {
-                currentCardIndex = 0; // Loop back to start
+                currentCardIndex = 0;
             }
             renderCard();
         }
@@ -1274,14 +1408,13 @@
             if (currentCardIndex > 0) {
                 currentCardIndex--;
             } else {
-                currentCardIndex = currentFlashcards.length - 1; // Loop to end
+                currentCardIndex = currentFlashcards.length - 1;
             }
             renderCard();
         }
 
         function shuffleCards(e) {
             e.stopPropagation();
-            // Fisher-Yates Shuffle
             for (let i = currentFlashcards.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
                 [currentFlashcards[i], currentFlashcards[j]] = [currentFlashcards[j], currentFlashcards[i]];
@@ -1293,6 +1426,9 @@
 
         // --- INICIALIZAÇÃO ---
         window.onload = function() {
+            // Init Accordion
+            initAccordion();
+
             // Init Flashcards
             renderCard();
 
@@ -1478,57 +1614,6 @@
             msg.style.display = 'block';
             msg.innerText = `Questionário submetido! Sua pontuação: ${score}/15. Continue para o Glossário.`;
             
-            checkUnlockCertificate();
-        }
-
-        // --- VERIFICAÇÃO GLOSSÁRIO (5 Exercícios) ---
-        function checkGlossary() {
-            let score = 0;
-            let allAttempted = true;
-            const exercises = ['g1', 'g2', 'g3', 'g4', 'g5'];
-            const maxPointsPerExercise = 4; // 1 point per correct pair within the exercise
-
-            // Reset styles
-            document.querySelectorAll('#glossario .desc-item').forEach(el => {
-                el.style.border = '1px solid #e2e8f0';
-            });
-
-            exercises.forEach(exId => {
-                const items = document.querySelectorAll(`#col-desc-${exId} .desc-item`);
-                let correctCount = 0;
-                let attemptedCount = 0;
-
-                items.forEach(el => {
-                    if (el.dataset.userGuess) {
-                        attemptedCount++;
-                        if (el.dataset.userGuess === el.dataset.correct) {
-                            correctCount++;
-                            el.style.border = '2px solid var(--success)'; // Visual feedback correct
-                        } else {
-                            el.style.border = '2px solid var(--error)'; // Visual feedback wrong
-                        }
-                    }
-                });
-
-                if (attemptedCount < items.length) allAttempted = false;
-                score += correctCount; // Add correct pairs to total score
-            });
-
-            const fb = document.getElementById('glossary-feedback-final');
-            fb.style.display = 'block';
-
-            if (!allAttempted) {
-                fb.className = 'feedback incorrect';
-                fb.innerText = "Atenção: Ainda não associou todos os termos em todos os 5 exercícios.";
-                return;
-            }
-
-            appState.glossaryScore = score;
-            appState.glossaryCompleted = true;
-            
-            fb.className = 'feedback correct';
-            fb.innerHTML = `<strong>Exercícios Concluídos!</strong> Pontuação obtida: ${score} / 20.<br>Se já fez o quiz, o certificado está agora disponível no topo da página.`;
-
             checkUnlockCertificate();
         }
 
