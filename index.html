@@ -348,6 +348,26 @@
             border-top: 1px solid #eee;
         }
 
+        /* MULTIMEDIA STYLES (NOVO) */
+        .media-container {
+            background: #f8fafc;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            border: 1px solid #e2e8f0;
+        }
+
+        .media-label {
+            display: block;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
         /* CERTIFICATE STYLES */
         .certificate-wrapper {
             border: 10px double var(--primary);
@@ -458,6 +478,7 @@
             <button class="nav-btn active" onclick="showSection('guia')">Guia de Estudo</button>
             <button class="nav-btn" onclick="showSection('quiz')">Questionário</button>
             <button class="nav-btn" onclick="showSection('glossario')">Glossário & Exercícios</button>
+            <button class="nav-btn" onclick="showSection('multimedia')">Multimédia</button>
             <!-- Botão Certificado só aparece se desbloqueado -->
             <button id="btn-certificado" class="nav-btn" onclick="showSection('certificado')">★ Obter Certificado ★</button>
         </div>
@@ -745,7 +766,32 @@
 
         </section>
 
-        <!-- SECÇÃO 4: CERTIFICADO (Inicialmente Vazio/Oculto) -->
+        <!-- SECÇÃO 4: MULTIMÉDIA (NOVO) -->
+        <section id="multimedia" class="section-content">
+            <h2>Recursos Multimédia</h2>
+            <p>Aprofunde os seus conhecimentos através destes recursos audiovisuais.</p>
+
+            <div class="media-container">
+                <span class="media-label">🎬 Vídeo: A Revolta de 1640</span>
+                <video width="100%" height="auto" controls style="border-radius: 8px; margin-top: 0.5rem; background: #000;">
+                    <source src="./1640.mp4" type="video/mp4">
+                    O seu navegador não suporta a reprodução de vídeo.
+                </video>
+                <p style="margin-top: 0.5rem; font-size: 0.9rem; opacity: 0.8;">Um olhar visual sobre os acontecimentos do 1º de Dezembro.</p>
+            </div>
+
+            <div class="media-container">
+                <span class="media-label">🎧 Podcast: O Caminho para a Independência</span>
+                <audio controls style="width: 100%; margin-top: 0.5rem;">
+                    <source src="./1640.mp3" type="audio/mpeg">
+                    O seu navegador não suporta o elemento de áudio.
+                </audio>
+                <p style="margin-top: 0.5rem; font-size: 0.9rem; opacity: 0.8;">Ouça a análise detalhada sobre o contexto político da época.</p>
+            </div>
+        </section>
+
+
+        <!-- SECÇÃO 5: CERTIFICADO (Inicialmente Vazio/Oculto) -->
         <section id="certificado" class="section-content">
             <h2>Certificado de Conclusão</h2>
             <p>Parabéns por concluir todas as atividades! Preencha o seu nome para gerar o certificado oficial.</p>
@@ -853,6 +899,7 @@
             if(id === 'guia') buttons[0].classList.add('active');
             if(id === 'quiz') buttons[1].classList.add('active');
             if(id === 'glossario') buttons[2].classList.add('active');
+            if(id === 'multimedia') buttons[3].classList.add('active'); // Novo índice para Multimédia
             if(id === 'certificado') document.getElementById('btn-certificado').classList.add('active');
         }
 
