@@ -49,31 +49,44 @@
             opacity: 0.9;
         }
 
-        /* Navigation */
+        /* Navigation (UPDATED) */
         nav {
             background-color: var(--secondary);
             position: sticky;
             top: 0;
             z-index: 100;
+            padding: 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
 
         .nav-container {
             display: flex;
             justify-content: center;
-            max-width: 1000px;
+            max-width: 1200px;
             margin: 0 auto;
+            align-items: center;
+            position: relative;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 5px;
             flex-wrap: wrap;
+            justify-content: center;
+            width: 100%;
         }
 
         .nav-btn {
             background: none;
             border: none;
             color: var(--white);
-            padding: 1rem 2rem;
-            font-size: 1rem;
+            padding: 1rem 1.2rem; /* Mais compacto */
+            font-size: 0.95rem;
             cursor: pointer;
-            transition: background 0.3s;
+            transition: background 0.3s, color 0.3s;
             font-weight: 600;
+            white-space: nowrap; /* Impede quebra de linha no texto do botão */
+            border-bottom: 3px solid transparent;
         }
 
         .nav-btn:hover {
@@ -81,8 +94,23 @@
         }
 
         .nav-btn.active {
-            background-color: var(--accent);
+            background-color: rgba(255,255,255,0.05);
+            border-bottom-color: var(--accent);
+            color: var(--accent);
+        }
+
+        /* Hamburger Menu Button */
+        .hamburger {
+            display: none;
+            background: none;
+            border: none;
             color: var(--white);
+            font-size: 1.2rem;
+            padding: 1rem;
+            cursor: pointer;
+            width: 100%;
+            text-align: left;
+            font-weight: bold;
         }
 
         /* Botão Certificado (Inicialmente Oculto) */
@@ -91,6 +119,10 @@
             background-color: var(--success);
             color: white;
             animation: pulse 2s infinite;
+            border-radius: 4px;
+            margin-left: 10px;
+            padding: 0.5rem 1rem;
+            align-self: center;
         }
         
         #btn-certificado.visible {
@@ -101,6 +133,50 @@
             0% { transform: scale(1); }
             50% { transform: scale(1.05); }
             100% { transform: scale(1); }
+        }
+
+        /* Responsive Navigation Styles */
+        @media (max-width: 900px) {
+            .nav-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .hamburger {
+                display: block; /* Mostrar botão menu */
+            }
+
+            .nav-links {
+                display: none; /* Esconder links por defeito */
+                flex-direction: column;
+                width: 100%;
+                background-color: #2d3748; /* Tom ligeiramente mais claro */
+                padding: 0;
+            }
+
+            .nav-links.show {
+                display: flex;
+            }
+
+            .nav-btn {
+                width: 100%;
+                text-align: left;
+                padding: 1rem 1.5rem;
+                border-bottom: 1px solid rgba(255,255,255,0.05);
+                border-left: 3px solid transparent;
+            }
+
+            .nav-btn.active {
+                border-bottom-color: rgba(255,255,255,0.05);
+                border-left-color: var(--accent);
+                background-color: rgba(0,0,0,0.2);
+            }
+
+            #btn-certificado {
+                margin: 1rem;
+                width: calc(100% - 2rem);
+                text-align: center;
+            }
         }
 
         /* Main Content */
@@ -724,15 +800,19 @@
 
     <nav>
         <div class="nav-container">
-            <button class="nav-btn" onclick="showSection('multimedia')">Multimédia</button>
-            <button class="nav-btn active" onclick="showSection('guia')">Guia de Estudo</button>
-            <button class="nav-btn" onclick="showSection('cronologia')">Cronologia</button>
-            <button class="nav-btn" onclick="showSection('flashcards')">Flashcards</button>
-            <button class="nav-btn" onclick="showSection('quiz')">Questionário</button>
-            <button class="nav-btn" onclick="showSection('glossario')">Glossário & Exercícios</button>
+            <!-- Botão Hambúrguer para Mobile -->
+            <button class="hamburger" onclick="toggleMenu()">☰ Menu</button>
             
-            <!-- Botão Certificado só aparece se desbloqueado -->
-            <button id="btn-certificado" class="nav-btn" onclick="showSection('certificado')">★ Obter Certificado ★</button>
+            <div class="nav-links" id="nav-links">
+                <button class="nav-btn" onclick="showSection('multimedia')">🎬 Multimédia</button>
+                <button class="nav-btn active" onclick="showSection('guia')">📖 Guia</button>
+                <button class="nav-btn" onclick="showSection('cronologia')">⏳ Cronologia</button>
+                <button class="nav-btn" onclick="showSection('flashcards')">⚡ Flashcards</button>
+                <button class="nav-btn" onclick="showSection('quiz')">📝 Quiz</button>
+                <button class="nav-btn" onclick="showSection('glossario')">📚 Glossário</button>
+                <!-- Botão Certificado só aparece se desbloqueado -->
+                <button id="btn-certificado" class="nav-btn" onclick="showSection('certificado')">🏆 Certificado</button>
+            </div>
         </div>
     </nav>
 
@@ -1339,9 +1419,14 @@
             document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
             
             document.getElementById(id).classList.add('active');
-            const buttons = document.querySelectorAll('.nav-btn');
             
-            // Ordem: Multimédia -> Guia -> Cronologia -> Flashcards -> Quiz -> Glossário
+            // Fechar menu mobile ao clicar
+            if(window.innerWidth <= 900) {
+                document.getElementById('nav-links').classList.remove('show');
+            }
+
+            const buttons = document.querySelectorAll('.nav-btn');
+            // Indices baseados na ordem HTML
             if(id === 'multimedia') buttons[0].classList.add('active');
             if(id === 'guia') buttons[1].classList.add('active');
             if(id === 'cronologia') buttons[2].classList.add('active');
@@ -1349,6 +1434,11 @@
             if(id === 'quiz') buttons[4].classList.add('active');
             if(id === 'glossario') buttons[5].classList.add('active');
             if(id === 'certificado') document.getElementById('btn-certificado').classList.add('active');
+        }
+
+        function toggleMenu() {
+            const navLinks = document.getElementById('nav-links');
+            navLinks.classList.toggle('show');
         }
 
         function checkUnlockCertificate() {
@@ -1614,6 +1704,57 @@
             msg.style.display = 'block';
             msg.innerText = `Questionário submetido! Sua pontuação: ${score}/15. Continue para o Glossário.`;
             
+            checkUnlockCertificate();
+        }
+
+        // --- VERIFICAÇÃO GLOSSÁRIO (5 Exercícios) ---
+        function checkGlossary() {
+            let score = 0;
+            let allAttempted = true;
+            const exercises = ['g1', 'g2', 'g3', 'g4', 'g5'];
+            const maxPointsPerExercise = 4; // 1 point per correct pair within the exercise
+
+            // Reset styles
+            document.querySelectorAll('#glossario .desc-item').forEach(el => {
+                el.style.border = '1px solid #e2e8f0';
+            });
+
+            exercises.forEach(exId => {
+                const items = document.querySelectorAll(`#col-desc-${exId} .desc-item`);
+                let correctCount = 0;
+                let attemptedCount = 0;
+
+                items.forEach(el => {
+                    if (el.dataset.userGuess) {
+                        attemptedCount++;
+                        if (el.dataset.userGuess === el.dataset.correct) {
+                            correctCount++;
+                            el.style.border = '2px solid var(--success)'; // Visual feedback correct
+                        } else {
+                            el.style.border = '2px solid var(--error)'; // Visual feedback wrong
+                        }
+                    }
+                });
+
+                if (attemptedCount < items.length) allAttempted = false;
+                score += correctCount; // Add correct pairs to total score
+            });
+
+            const fb = document.getElementById('glossary-feedback-final');
+            fb.style.display = 'block';
+
+            if (!allAttempted) {
+                fb.className = 'feedback incorrect';
+                fb.innerText = "Atenção: Ainda não associou todos os termos em todos os 5 exercícios.";
+                return;
+            }
+
+            appState.glossaryScore = score;
+            appState.glossaryCompleted = true;
+            
+            fb.className = 'feedback correct';
+            fb.innerHTML = `<strong>Exercícios Concluídos!</strong> Pontuação obtida: ${score} / 20.<br>Se já fez o quiz, o certificado está agora disponível no topo da página.`;
+
             checkUnlockCertificate();
         }
 
