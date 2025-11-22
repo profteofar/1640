@@ -303,7 +303,7 @@
             border-top: 1px solid #eee;
         }
 
-        /* INFOGRAPHIC ZOOM STYLES (NOVO) */
+        /* INFOGRAPHIC ZOOM STYLES */
         .infographic-img {
             max-width: 100%;
             height: auto;
@@ -333,6 +333,74 @@
             box-sizing: border-box;
             cursor: zoom-out;
             margin: 0;
+        }
+
+        /* IMAGE SLIDES CAROUSEL STYLES (NOVO) */
+        .slides-section-container {
+            margin-top: 4rem;
+            border-top: 4px solid var(--accent);
+            padding-top: 2rem;
+        }
+
+        .carousel-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin: 2rem auto;
+            max-width: 900px;
+            background: #2d3748;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .carousel-slide {
+            position: relative;
+            width: 100%;
+            text-align: center;
+        }
+
+        .carousel-slide img {
+            max-width: 100%;
+            height: auto;
+            max-height: 500px;
+            border-radius: 4px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            display: block;
+            margin: 0 auto;
+        }
+
+        .slide-number-indicator {
+            color: #aaa;
+            margin-top: 10px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .carousel-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: none;
+            padding: 1rem;
+            cursor: pointer;
+            font-size: 1.5rem;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+        }
+
+        .carousel-btn:hover {
+            background: var(--accent);
+        }
+
+        .carousel-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
         }
 
         /* TIMELINE STYLES */
@@ -873,14 +941,14 @@
             </div>
         </section>
 
-        <!-- SECÇÃO 2: GUIA DE ESTUDO (ACORDEÃO) -->
+        <!-- SECÇÃO 2: GUIA DE ESTUDO (ACORDEÃO + DIAPOSITIVOS EM IMAGEM) -->
         <section id="guia" class="section-content active">
             
             <p style="margin-bottom: 2rem; font-style: italic; color: var(--secondary); background: #e5e7eb; padding: 1rem; border-left: 4px solid var(--accent); border-radius: 4px;">
                 Depois de consultares o Vídeo Resumo ou o Podcast sobre a matéria faz a revisão com o seguinte Guia de Estudo. <br><strong>Clica nos tópicos abaixo para expandir o conteúdo.</strong>
             </p>
 
-            <!-- INFOGRAFIA (ATUALIZADO: COM CLASSE ZOOM) -->
+            <!-- INFOGRAFIA (COM CLASSE ZOOM) -->
             <div style="margin-bottom: 2rem; text-align: center;">
                 <h3 style="text-align: left; color: var(--primary); border-bottom: 2px solid var(--accent); padding-bottom: 0.5rem; margin-bottom: 1rem;">Infografia</h3>
                 <img src="./infografia.jpg" alt="Infografia Resumo União Ibérica" class="infographic-img" onclick="toggleZoom(this)">
@@ -888,7 +956,7 @@
             </div>
 
             <div class="study-guide-accordion">
-                
+                <!-- TÓPICOS DO ACORDEÃO MANTIDOS COMO ESTAVAM -->
                 <!-- TÓPICO 1 -->
                 <div class="accordion-item">
                     <button class="accordion-header">1. Origens da Crise Sucessória (1578–1580)</button>
@@ -986,8 +1054,25 @@
                         </div>
                     </div>
                 </div>
-
             </div>
+
+            <!-- NOVA SECÇÃO: SLIDES CAROUSEL (IMAGENS) -->
+            <div class="slides-section-container">
+                <h2 style="margin-bottom: 1rem;">Diapositivos: Resumo da Matéria</h2>
+                <p style="margin-bottom: 1.5rem;">Navegue pelos slides para uma revisão visual rápida.</p>
+                
+                <div class="carousel-container">
+                    <button class="carousel-btn prev" id="prev-image-slide" onclick="changeImageSlide(-1)">&#10094;</button>
+                    
+                    <div class="carousel-slide">
+                        <img id="slide-img" src="./slides1.jpg" alt="Slide de Apresentação">
+                        <div class="slide-number-indicator" id="image-slide-indicator">Slide 1 de 14</div>
+                    </div>
+                    
+                    <button class="carousel-btn next" id="next-image-slide" onclick="changeImageSlide(1)">&#10095;</button>
+                </div>
+            </div>
+
         </section>
 
         <!-- SECÇÃO 3: CRONOLOGIA -->
@@ -1508,6 +1593,34 @@
             img.classList.toggle('zoomed');
         }
 
+        // --- IMAGE SLIDES CAROUSEL LOGIC (NOVO) ---
+        let currentImageSlide = 0;
+        const totalImageSlides = 14;
+        const imageBaseName = "slides"; // Base name without number
+
+        function changeImageSlide(direction) {
+            currentImageSlide += direction;
+            
+            // Loop logic
+            if (currentImageSlide < 0) currentImageSlide = totalImageSlides - 1;
+            if (currentImageSlide >= totalImageSlides) currentImageSlide = 0;
+
+            updateImageSlide();
+        }
+
+        function updateImageSlide() {
+            const imgElement = document.getElementById('slide-img');
+            const indicator = document.getElementById('image-slide-indicator');
+            
+            // Construct image path: ./slides1.jpg, ./slides2.jpg, etc.
+            // Adjusting index + 1 because user said slides1 to slides14
+            const slideNumber = currentImageSlide + 1; 
+            imgElement.src = `./${imageBaseName}${slideNumber}.jpg`;
+            imgElement.alt = `Slide ${slideNumber}`;
+            
+            indicator.innerText = `Slide ${slideNumber} de ${totalImageSlides}`;
+        }
+
         // --- FLASHCARDS LOGIC ---
         function renderCard() {
             const card = currentFlashcards[currentCardIndex];
@@ -1565,6 +1678,9 @@
 
             // Init Flashcards
             renderCard();
+
+            // Init Image Carousel
+            updateImageSlide();
 
             // Render Glossário
             const glossaryContainer = document.getElementById('glossary-container');
@@ -1748,57 +1864,6 @@
             msg.style.display = 'block';
             msg.innerText = `Questionário submetido! Sua pontuação: ${score}/15. Continue para o Glossário.`;
             
-            checkUnlockCertificate();
-        }
-
-        // --- VERIFICAÇÃO GLOSSÁRIO (5 Exercícios) ---
-        function checkGlossary() {
-            let score = 0;
-            let allAttempted = true;
-            const exercises = ['g1', 'g2', 'g3', 'g4', 'g5'];
-            const maxPointsPerExercise = 4; // 1 point per correct pair within the exercise
-
-            // Reset styles
-            document.querySelectorAll('#glossario .desc-item').forEach(el => {
-                el.style.border = '1px solid #e2e8f0';
-            });
-
-            exercises.forEach(exId => {
-                const items = document.querySelectorAll(`#col-desc-${exId} .desc-item`);
-                let correctCount = 0;
-                let attemptedCount = 0;
-
-                items.forEach(el => {
-                    if (el.dataset.userGuess) {
-                        attemptedCount++;
-                        if (el.dataset.userGuess === el.dataset.correct) {
-                            correctCount++;
-                            el.style.border = '2px solid var(--success)'; // Visual feedback correct
-                        } else {
-                            el.style.border = '2px solid var(--error)'; // Visual feedback wrong
-                        }
-                    }
-                });
-
-                if (attemptedCount < items.length) allAttempted = false;
-                score += correctCount; // Add correct pairs to total score
-            });
-
-            const fb = document.getElementById('glossary-feedback-final');
-            fb.style.display = 'block';
-
-            if (!allAttempted) {
-                fb.className = 'feedback incorrect';
-                fb.innerText = "Atenção: Ainda não associou todos os termos em todos os 5 exercícios.";
-                return;
-            }
-
-            appState.glossaryScore = score;
-            appState.glossaryCompleted = true;
-            
-            fb.className = 'feedback correct';
-            fb.innerHTML = `<strong>Exercícios Concluídos!</strong> Pontuação obtida: ${score} / 20.<br>Se já fez o quiz, o certificado está agora disponível no topo da página.`;
-
             checkUnlockCertificate();
         }
 
