@@ -303,6 +303,38 @@
             border-top: 1px solid #eee;
         }
 
+        /* INFOGRAPHIC ZOOM STYLES (NOVO) */
+        .infographic-img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            cursor: zoom-in;
+            transition: transform 0.3s ease;
+        }
+
+        .infographic-img:hover {
+            box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+        }
+
+        .infographic-img.zoomed {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            max-width: none;
+            max-height: none;
+            object-fit: contain;
+            background-color: rgba(0, 0, 0, 0.95);
+            z-index: 9999;
+            border-radius: 0;
+            padding: 20px;
+            box-sizing: border-box;
+            cursor: zoom-out;
+            margin: 0;
+        }
+
         /* TIMELINE STYLES */
         .timeline {
             position: relative;
@@ -848,10 +880,11 @@
                 Depois de consultares o Vídeo Resumo ou o Podcast sobre a matéria faz a revisão com o seguinte Guia de Estudo. <br><strong>Clica nos tópicos abaixo para expandir o conteúdo.</strong>
             </p>
 
-            <!-- INFOGRAFIA (NOVO) -->
+            <!-- INFOGRAFIA (ATUALIZADO: COM CLASSE ZOOM) -->
             <div style="margin-bottom: 2rem; text-align: center;">
                 <h3 style="text-align: left; color: var(--primary); border-bottom: 2px solid var(--accent); padding-bottom: 0.5rem; margin-bottom: 1rem;">Infografia</h3>
-                <img src="./infografia.jpg" alt="Infografia Resumo União Ibérica" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                <img src="./infografia.jpg" alt="Infografia Resumo União Ibérica" class="infographic-img" onclick="toggleZoom(this)">
+                <p style="font-size: 0.8rem; color: var(--secondary); margin-top: 0.5rem;">(Toque para ampliar)</p>
             </div>
 
             <div class="study-guide-accordion">
@@ -1468,6 +1501,11 @@
                     } 
                 });
             }
+        }
+
+        // --- INFOGRAPHIC ZOOM LOGIC ---
+        function toggleZoom(img) {
+            img.classList.toggle('zoomed');
         }
 
         // --- FLASHCARDS LOGIC ---
